@@ -10,26 +10,19 @@ function [ce, dce] = compliance (e,Kloc,ff)
     
     % assemble global stiffness matrix
    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % complete the codes here %
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%
+    Kglob = createKglob (e, Kloc);
     
     % solve equilibrium equation
     
     q = Kglob\ff;
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % complete the codes here %
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%
+    ce = ff'*q;
     
     % Gradient
     if nargout > 1
       dce = zeros(d_h, 1);  
       for i=1:d_h
-        
-        
         % compute partial derivative
-        dce(i) =  ...  % complete the code here *
+        dce(i) = -3/e(i)*q'*Kglob*q
       end
     end
     

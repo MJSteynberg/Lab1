@@ -1,4 +1,4 @@
-function [Kglob] = cKglob (e, Kloc)
+function [Kglob] = createKglob (e, Kloc)
 % function [Kglob] = createKglob (e, Kloc)
 % e      :    design vector
 % Kloc   :    local stiffness matrix on element of length h
@@ -18,7 +18,7 @@ function [Kglob] = cKglob (e, Kloc)
                 Klocfull(2*(l-1) + x, 2*(l-1) + y) = Kloc(x,y);
             end
         end
-        Kglob = Kglob + Klocfull;
+        Kglob = Kglob + e(l)^3*Klocfull;
    end
 
     % Reduce local stiffness matrices
@@ -30,7 +30,4 @@ function [Kglob] = cKglob (e, Kloc)
     P(:,2:dim+1) = I;
 
     Kglob = P*Kglob*P';
-    disp(Kglob)
 end 
-
-cKglob([1,1,1,1,1,1], [1,2,3,4;1,2,3,4;1,2,3,4;1,2,3,4])

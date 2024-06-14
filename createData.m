@@ -12,15 +12,17 @@ function [Kloc,ff] = createData (d_h, f)
     S = load('lsm.mat');
     
     % scale Kref and Mref to realize transformation to element of length h
-    Kloc = ...
-    Mloc = ...
+    Kloc = 1/h^3 * S.Kref;
+    Mloc = h * S.Mref;
 
     Mglob = createMglob(Mloc, d_h);
 
     % Reduce force vector
     dim = 2*(d_h-1);
 
-    P = ... % reduction matrix (skip DOFs fixed by hom. Dirichlet)
+    I = eye(dim);
+    P = zeros(dim, dim+2);
+    P(:,2:dim+1) = I; % reduction matrix (skip DOFs fixed by hom. Dirichlet)
     
     ff = P*(Mglob*f);
 end
